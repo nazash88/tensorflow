@@ -54,6 +54,7 @@ import pathlib
 import platform
 import re
 import subprocess
+from security import safe_command
 
 parser = argparse.ArgumentParser(
     usage=__doc__, formatter_class=argparse.ArgumentDefaultsHelpFormatter)
@@ -234,7 +235,7 @@ def gcloud(tool, args, stdin=None):
             r"SDK\google-cloud-sdk\bin\{}.cmd").format(tool)
 
   try:
-    ret = subprocess.run([tool, *args],
+    ret = safe_command.run(subprocess.run, [tool, *args],
                          check=True,
                          universal_newlines=True,
                          stdout=subprocess.PIPE,
