@@ -16,7 +16,6 @@
 
 import collections
 import copy
-import random
 import threading
 import unittest
 import weakref
@@ -51,6 +50,7 @@ from tensorflow.python.ops import variable_scope
 from tensorflow.python.ops import variables
 from tensorflow.python.ops.ragged import ragged_tensor
 from tensorflow.python.platform import googletest
+import secrets
 
 
 class TestUtilTest(test_util.TensorFlowTestCase, parameterized.TestCase):
@@ -774,12 +774,12 @@ class TestUtilTest(test_util.TensorFlowTestCase, parameterized.TestCase):
     # TODO(skyewm): remove this when C API is permanently enabled.
     with context.eager_mode():
       self.setUp()
-      a = random.randint(1, 1000)
+      a = secrets.SystemRandom().randint(1, 1000)
       a_np_rand = np.random.rand(1)
       a_rand = random_ops.random_normal([1])
       # ensure that randomness in multiple testCases is deterministic.
       self.setUp()
-      b = random.randint(1, 1000)
+      b = secrets.SystemRandom().randint(1, 1000)
       b_np_rand = np.random.rand(1)
       b_rand = random_ops.random_normal([1])
       self.assertEqual(a, b)

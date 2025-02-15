@@ -16,7 +16,6 @@
 
 import contextlib
 import os
-import random
 import re
 
 import numpy as np
@@ -36,6 +35,7 @@ from tensorflow.python.ops import variables
 from tensorflow.python.platform import flags
 from tensorflow.python.platform import test
 from tensorflow.python.platform import tf_logging as logging
+import secrets
 
 FLAGS = flags.FLAGS
 
@@ -229,7 +229,7 @@ class XLATestCase(test.TestCase):
       return
     logging.info('Start test case: %s', name)
 
-    random.seed(random_seed.DEFAULT_GRAPH_SEED)
+    secrets.SystemRandom().seed(random_seed.DEFAULT_GRAPH_SEED)
     np.random.seed(random_seed.DEFAULT_GRAPH_SEED)
 
   def tearDown(self):
