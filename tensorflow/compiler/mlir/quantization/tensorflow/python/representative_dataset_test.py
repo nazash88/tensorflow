@@ -13,7 +13,6 @@
 # limitations under the License.
 # ==============================================================================
 """Tests for representative_dataset.py."""
-import random
 
 import numpy as np
 
@@ -23,6 +22,7 @@ from tensorflow.python.framework import ops
 from tensorflow.python.framework import test_util
 from tensorflow.python.platform import test
 from tensorflow.python.types import core
+import secrets
 
 
 def _contains_tensor(sample: repr_dataset.RepresentativeSample) -> bool:
@@ -151,7 +151,7 @@ class RepresentativeDatasetTest(test.TestCase):
         'tensor_key': np.random.uniform(low=-1., high=1., size=(3, 3))
     } for _ in range(4)])
 
-    random.shuffle(repr_ds)
+    secrets.SystemRandom().shuffle(repr_ds)
 
     with self.session() as sess:
       new_repr_ds = repr_dataset.replace_tensors_by_numpy_ndarrays(

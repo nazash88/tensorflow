@@ -15,7 +15,6 @@
 """Tests for tensorflow.python.client.session.Session."""
 import collections
 import os
-import random
 import sys
 import threading
 import time
@@ -58,6 +57,7 @@ from tensorflow.python.ops import variables
 from tensorflow.python.platform import googletest
 from tensorflow.python.training import server_lib
 from tensorflow.python.util import compat
+import secrets
 
 try:
   import attr  # pylint:disable=g-import-not-at-top
@@ -1157,7 +1157,7 @@ class SessionTest(test_util.TensorFlowTestCase):
 
   @staticmethod
   def _build_graph():
-    time.sleep(random.random() * 0.1)
+    time.sleep(secrets.SystemRandom().random() * 0.1)
     # Do some graph construction. Try to exercise non-trivial paths.
     graph = ops.get_default_graph()
     gdef = None
@@ -1183,7 +1183,7 @@ class SessionTest(test_util.TensorFlowTestCase):
 
       def run_loop():
         while not stop.is_set():
-          time.sleep(random.random() * 0.1)
+          time.sleep(secrets.SystemRandom().random() * 0.1)
           self.assertEqual(sess.run(c), 5.0)
 
       threads = [self.checkedThread(target=run_loop) for _ in range(10)]
@@ -1204,7 +1204,7 @@ class SessionTest(test_util.TensorFlowTestCase):
 
       def run_loop():
         while not stop.is_set():
-          time.sleep(random.random() * 0.1)
+          time.sleep(secrets.SystemRandom().random() * 0.1)
           self.assertEqual(sess.run(c), 5.0)
 
       run_threads = [self.checkedThread(target=run_loop) for _ in range(10)]
