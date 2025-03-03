@@ -21,6 +21,7 @@ import requests
 
 from six.moves.urllib import request
 from tensorflow.python.eager import context
+from security import safe_requests
 
 
 GCP_METADATA_HEADER = {'Metadata-Flavor': 'Google'}
@@ -61,7 +62,7 @@ def on_gcp():
   try:
     # Timeout in 5 seconds, in case the test environment has connectivity issue.
     # There is not default timeout, which means it might block forever.
-    response = requests.get(
+    response = safe_requests.get(
         '%s/computeMetadata/v1/%s' %
         (gce_metadata_endpoint, 'instance/hostname'),
         headers=GCP_METADATA_HEADER,
