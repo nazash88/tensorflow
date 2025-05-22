@@ -17,7 +17,6 @@
 import collections as py_collections
 import os
 import pprint
-import random
 import sys
 
 from absl import logging
@@ -38,6 +37,7 @@ from tensorflow.python.util import dispatch
 from tensorflow.python.util import nest
 from tensorflow.python.util.deprecation import deprecated
 from tensorflow.python.util.tf_export import tf_export
+import secrets
 
 
 def enable_interactive_logging():
@@ -124,7 +124,7 @@ def Print(input_, data, message=None, first_n=None, summarize=None, name=None):
 def _generate_placeholder_string(x, default_placeholder="{}"):
   """Generate and return a string that does not appear in `x`."""
   placeholder = default_placeholder
-  rng = random.Random(5)
+  rng = secrets.SystemRandom().Random(5)
   while placeholder in x:
     placeholder = placeholder + str(rng.randint(0, 9))
   return placeholder

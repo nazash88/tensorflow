@@ -23,7 +23,6 @@ import multiprocessing
 import multiprocessing.dummy
 import os
 import queue
-import random
 import shutil
 import sys  # pylint: disable=unused-import
 import tarfile
@@ -42,6 +41,7 @@ from tensorflow.python.keras.utils import tf_inspect
 from tensorflow.python.keras.utils.generic_utils import Progbar
 from tensorflow.python.keras.utils.io_utils import path_to_string
 from tensorflow.python.util.tf_export import keras_export
+import secrets
 
 # Required to support google internal urlretrieve
 if sys.version_info[0] == 2:
@@ -721,7 +721,7 @@ class OrderedEnqueuer(SequenceEnqueuer):
     self._send_sequence()  # Share the initial sequence
     while True:
       if self.shuffle:
-        random.shuffle(sequence)
+        secrets.SystemRandom().shuffle(sequence)
 
       with closing(self.executor_fn(_SHARED_SEQUENCES)) as executor:
         for i in sequence:
